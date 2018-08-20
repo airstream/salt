@@ -1,0 +1,9 @@
+#!/bin/bash
+# SHOW SALT KEYS THAT HAVE MORE THAN 1 PUBLIC KEY WITH SAME HOSTNAME WHEN RUN COMMAND salt-key
+# IF SUCH PUBLIC KEY WITH SAME HOSTNAME EXISTS, SCRIPT WRITES LOG RECORD TO A LOG FILE salt_double_keys_delete.log
+# AND DELETE THIS PUBLIC KEY WITH COMMAND salt-key -d <hostname>
+for output in $(salt-key -L | sort -n | uniq -c | grep -v 1 | awk '{ print $2 }')
+do
+        echo `date "+%Y-%m-%d %H:%M:%S"` $output was deleted >> /var/log/salt_double_keys_delete.log
+        salt-key -d $output -y
+done
