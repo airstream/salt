@@ -1,1 +1,1 @@
-# salt - useful stuff about https://saltstack.com/
+# salt configuration management https://saltstack.com/
